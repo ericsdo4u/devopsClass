@@ -17,7 +17,7 @@ services:
     image: donald/devops-class:latest
     container_name: devops-class
     environment:
-      SPRING_DATASOURCE_URL: ${DATABASE_URL:-jdbc:postgresql://postgres:5432/devops_db}
+      SPRING_DATASOURCE_URL: ${DATABASE_URL:jdbc:postgresql://postgres:5432/devops_db}
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: Business@1
     depends_on:

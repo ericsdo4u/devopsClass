@@ -159,7 +159,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
@@ -183,9 +183,17 @@ jobs:
           echo "${{ secrets.AWS_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
           ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@${{ secrets.AWS_HOST }} << 'EOF'
-            sudo chmod 666 /var/run/docker.sock
+            # Update package list and install Docker if necessary
+            sudo apt update
+            sudo apt install -y docker.io
+
+            # Ensure Docker service is running
+            sudo systemctl start docker
+            sudo systemctl enable docker
+
+            # Pull and deploy Docker image
             docker pull ericsdo4u/devops-class:latest
             docker stop devops-class || true
             docker rm devops-class || true
-            docker run -d --name devops-app -p 8080:8080 ericsdo4u/devops-class:latest
+            docker run -d --name devops-class -p 8080:8080 ericsdo4u/devops-class:latest
           EOF
