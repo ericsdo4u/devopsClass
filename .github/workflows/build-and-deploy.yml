@@ -138,7 +138,7 @@ name: Deploy Dockerhub
 on:
   push:
     branches:
-      - hello
+      - dev
 
 jobs:
   build-and-deploy:
