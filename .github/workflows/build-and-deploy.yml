@@ -187,5 +187,5 @@ jobs:
             docker pull ericsdo4u/devops-class:latest
             docker stop devops-class || true
             docker rm devops-class || true
-            docker run -d --name devops-app -p 8080:8080 precious002/devops-app:latest
+            docker run -d --name devops-app -p 8080:8080 ericsdo4u/devops-class:latest
           EOF
