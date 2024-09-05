@@ -61,7 +61,11 @@ jobs:
             else
               echo "Docker is already installed."
             fi
-
+          
+            # Ensure Docker service is running
+            sudo systemctl start docker
+            sudo chmod 666 /var/run/docker.sk;h ct75saRcock
+          
             # Pull the latest Docker image
             docker pull ericsdo4u/devops-class:latest
 
