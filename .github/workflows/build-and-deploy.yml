@@ -170,10 +170,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t precious002/devops-app:latest .
+        run: docker build -t ericsdo4u/devops-class:latest .
 
       - name: Push Docker image to Docker Hub
-        run: docker push precious002/devops-app:latest
+        run: docker push ericsdo4u/devops-class:latest
 
       - name: Deploy to AWS EC2
         env:
@@ -184,8 +184,8 @@ jobs:
           chmod 600 private_key.pem
           ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@${{ secrets.AWS_HOST }} << 'EOF'
             sudo chmod 666 /var/run/docker.sock
-            docker pull precious002/devops-app:latest
-            docker stop devops-app || true
-            docker rm devops-app || true
+            docker pull ericsdo4u/devops-class:latest
+            docker stop devops-class || true
+            docker rm devops-class || true
             docker run -d --name devops-app -p 8080:8080 precious002/devops-app:latest
           EOF
